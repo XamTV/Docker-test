@@ -47,3 +47,10 @@ jobs:
 
       - name: Build
         run: docker build -t gettting-started ./app
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Docker Hub
+        run: curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
