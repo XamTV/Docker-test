@@ -31,17 +31,19 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: test
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
 
-      - name: Build Docker image
-        working-directory: app
-        run: docker build -t my-node-app .
-
-      - name: Push Docker image to Docker Hub
-        uses: docker/build-push-action@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          context: ./app
-          push: true
-          tags: username/my-node-app:latest
+          node-version: "18"
+          cache: "yarn"
+          cache-dependency-path: "./app/yarn.lock"
+
+      - name: Install Deps
+        working-directory: ./app
+        run: yarn install
+
+      - name: Build
+        run: docker build -t gettting-started ./app
