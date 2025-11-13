@@ -27,7 +27,7 @@ jobs:
         working-directory: app
         run: yarn test
         env:
-          SQLITE_DATABASE: "./test-db.sqlite"
+          SQLITE_DB_LOCATION: "./test-db.sqlite"
 
   build:
     runs-on: ubuntu-latest
